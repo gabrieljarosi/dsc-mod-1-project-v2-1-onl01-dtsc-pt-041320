@@ -977,22 +977,16 @@ filtered_rating_df = df[(df['rating'] == 'R') | (df['rating'] == 'PG')|
 #PLOTTING REVENUE BY MOVIE RATING
 sns.catplot(x="rating", y="movie_revenue", kind="swarm", data=filtered_rating_df,height=7, aspect=1.5,palette = ('ocean_r'))
 sns.set_context('talk')
-plt.title('Revenue by Movie Rating',fontsize=20, color = 'darkblue')
-plt.ylabel('Movie Revenue [$]',fontsize=20, color = 'darkblue')
-plt.xlabel('Movie Rating',fontsize=20, color = 'darkblue')
+plt.title('REVENUE BY MOVIE RATING',fontsize=30, color = 'darkblue')
+plt.ylabel('MOVIE REVENUE [$]',fontsize=20, color = 'darkblue')
+plt.xlabel('MOVIE RATINGS',fontsize=20, color = 'darkblue')
 ax = plt.gca()
 ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
 plt.show()
 ```
 
-    C:\Users\Biel_\anaconda3\envs\learn-env\lib\site-packages\seaborn\categorical.py:1324: RuntimeWarning: invalid value encountered in less
-      off_low = points < low_gutter
-    C:\Users\Biel_\anaconda3\envs\learn-env\lib\site-packages\seaborn\categorical.py:1328: RuntimeWarning: invalid value encountered in greater
-      off_high = points > high_gutter
-    
 
-
-![png](output_30_1.png)
+![png](output_30_0.png)
 
 
 
@@ -1022,9 +1016,9 @@ sns.set_style('darkgrid')
 
 barplot = sns.barplot(x=rating_list,y=mean_rev_list,palette = ('ocean_r'))
 
-plt.title('Average Movie Revenue by Rating',y=1, fontsize=20, color = 'darkblue')
-plt.ylabel('Revenue[$]',fontsize = 20,color = 'darkblue')
-plt.xlabel('Movie Ratings',fontsize = 20,color = 'darkblue')
+plt.title('AVERAGE MOVIE REVENUE BY RATING',y=1, fontsize=20, color = 'darkblue')
+plt.ylabel('MOVIE REVENUE[$]',fontsize = 20,color = 'darkblue')
+plt.xlabel('MOVIE RATINGS',fontsize = 20,color = 'darkblue')
 
 
 
@@ -1129,9 +1123,9 @@ plt.show()
 ```python
 #GRAPHING MOVIE BUDGET VS MOVIE REVENUE
 fig_1 = sns.lmplot(x="movie_budget", y="movie_revenue",fit_reg = True, data=df, height=6, aspect=2)
-plt.title('MOVIE BUDGET vs. MOVIE REVENUE',fontsize=18, color = 'darkblue')
-plt.ylabel('MOVIE REVENUE',fontsize=18, color = 'darkblue')
-plt.xlabel('MOVIE BUDGET',fontsize=18, color = 'darkblue')
+plt.title('MOVIE BUDGET vs. MOVIE REVENUE',fontsize=30, color = 'darkblue')
+plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
+plt.xlabel('MOVIE BUDGET[$]',fontsize=18, color = 'darkblue')
 
 ax = plt.gca()
 ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
@@ -1147,7 +1141,7 @@ plt.show()
 - Microsoft should take in consideration the amount of money it is willing to invest on it's new movie studio.
 
 
-- There is a **positive correlation of 0.712 between Movie Revenue and Movie Budget**. 
+- There is a **positive correlation of 0.72 between Movie Revenue and Movie Budget**. 
     - That means that the more a studio invests in a movie, the higher it's revenue will be. 
     - This is not a guarantee, since the correlation is not 1.0. Other factors may affect the success of a movie, such as actors, directors, genre, and rating.    
 
@@ -1357,7 +1351,7 @@ result
 #CREATING AN AVERAGE MOVIE REVENUE BY GENRE GRAPH
 plt.figure(figsize = (25,8))
 avg_barplot = sns.barplot(x="Genre", y="Average_Budget",  data=avg_df_bud, palette = ('ocean_r'))
-plt.title('AVERAGE MOVIE BUDGET BY GENRE',fontsize=18, color = 'darkblue')
+plt.title('AVERAGE MOVIE BUDGET BY GENRE',fontsize=30, color = 'darkblue')
 plt.ylabel('MOVIE BUDGET[$]',fontsize=18, color = 'darkblue')
 plt.xlabel('MOVIE GENRES',fontsize=18, color = 'darkblue')
 ax = plt.gca()
@@ -1374,7 +1368,7 @@ plt.show()
 #CREATING A AVERAGE MOVIE BUDGET BY GENRE GRAPH
 plt.figure(figsize = (25,8))
 avg_barplot = sns.barplot(x="Genre", y="Average_Revenue",  data=avg_df ,palette = ('ocean_r'))
-plt.title('AVERAGE MOVIE REVENUE BY GENRE',fontsize=18, color = 'darkblue')
+plt.title('AVERAGE MOVIE REVENUE BY GENRE',fontsize=30, color = 'darkblue')
 plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
 plt.xlabel('MOVIE GENRES',fontsize=18, color = 'darkblue')
 ax = plt.gca()
@@ -1405,7 +1399,7 @@ ROI_df.sort_values('Average_ROI',inplace=True)
 #GRAPHING AVERAGE MOVIE RETURN OF INVESTMENT PER GENRE
 plt.figure(figsize = (25,8))
 avg_barplot = sns.barplot(x="Genre", y="Average_ROI",  data=ROI_df,palette = ('ocean_r'))
-plt.title('AVERAGE MOVIE R.O.I BY GENRE',fontsize=18, color = 'darkblue')
+plt.title('AVERAGE MOVIE R.O.I BY GENRE',fontsize=30, color = 'darkblue')
 plt.ylabel('MOVIE R.O.I',fontsize=18, color = 'darkblue')
 plt.xlabel('MOVIE GENRES',fontsize=18, color = 'darkblue')
 ax = plt.gca()
@@ -1746,38 +1740,7 @@ sum_director_df.sort_values('Revenue_Sum',inplace=True, ascending = False)
 
 ```python
 #CREATING A MOVIE REVENUE BY DIRECTOR GRAPH
-plt.figure(figsize = (30,8))
-avg_barplot = sns.barplot(x="director", y="Revenue_Sum",  data=sum_director_df[1:11] ,palette = ('ocean_r'))
-plt.title('TOP 10 DIRECTORS WITH HIGHEST MOVIE REVENUE IN LAST 20 YRS',fontsize=18, color = 'darkblue')
-plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
-plt.xlabel('DIRECTORS',fontsize=18, color = 'darkblue')
-ax = plt.gca()
-ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
-plt.show()
-
-#CREATING A AVERAGE MOVIE REVENUE BY ACTOR GRAPH
-plt.figure(figsize = (30,8))
-avg_barplot = sns.barplot(x="Actor", y="Revenue_Sum",  data=sum_actor_df[2:12] ,palette = ('ocean_r'),)
-plt.title('TOP 10 ACTORS WITH HIGHEST MOVIE REVENUE IN LAST 20 YRS',fontsize=18, color = 'darkblue')
-plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
-plt.xlabel('ACTORS',fontsize=18, color = 'darkblue')
-ax = plt.gca()
-ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
-plt.show()
-```
-
-
-![png](output_76_0.png)
-
-
-
-![png](output_76_1.png)
-
-
-
-```python
-#CREATING A MOVIE REVENUE BY DIRECTOR GRAPH
-fig,axes = plt.subplots(ncols=2,figsize = (20,15))
+fig,axes = plt.subplots(ncols=2,figsize = (25,15))
 avg_barplot = sns.barplot(y="director", x="Revenue_Sum",  data=sum_director_df[1:11] ,palette = ('ocean_r'),
                          ax=axes[0],orient='h')
 ax = axes[0]
@@ -1797,12 +1760,12 @@ ax.set_xlabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
 ax.set_ylabel('ACTORS',fontsize=18, color = 'darkblue')
 
 ax.xaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
-plt.suptitle('TOP ACTORS AND DIRECTORS',y=1.05,fontsize=18, color = 'darkblue',weight='bold')
+plt.suptitle('TOP ACTORS AND DIRECTORS',y=1.05,fontsize=30, color = 'darkblue',weight='bold')
 plt.tight_layout()
 ```
 
 
-![png](output_77_0.png)
+![png](output_76_0.png)
 
 
 **ANSWER:**
