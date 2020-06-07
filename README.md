@@ -5,8 +5,12 @@ Please fill out:
 * Student pace: part time
 * Scheduled project review date/time: 6/9/20 @ 5:00 PM
 * Instructor name: James Irving 
-* Blog post URL:
+* Blog post URL: https://learn.co/blog/blog_posts/38433/edit
 
+
+# INTRODUCTION
+
+**Microsoft sees all the big companies creating original video content, and they want to get in on the fun. They have decided to create a new movie studio, but the problem is they don’t know anything about creating movies. I was hired to help them better understand the movie industry. My team is charged with doing data analysis and creating a presentation that explores what type of films are currently doing the best at the box office. I must then translate those findings into actionable insights that the CEO can use when deciding what type of films they should be creating.**
 
 # IMPORTING
 
@@ -21,7 +25,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 ```
 
-#  # WEBSCRAPING TRIAL CODE
+#   WEBSCRAPING TRIAL CODE
 
 
 ```python
@@ -981,8 +985,14 @@ ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
 plt.show()
 ```
 
+    C:\Users\Biel_\anaconda3\envs\learn-env\lib\site-packages\seaborn\categorical.py:1324: RuntimeWarning: invalid value encountered in less
+      off_low = points < low_gutter
+    C:\Users\Biel_\anaconda3\envs\learn-env\lib\site-packages\seaborn\categorical.py:1328: RuntimeWarning: invalid value encountered in greater
+      off_high = points > high_gutter
+    
 
-![png](output_28_0.png)
+
+![png](output_30_1.png)
 
 
 
@@ -1025,11 +1035,17 @@ plt.show()
 ```
 
 
-![png](output_29_0.png)
+![png](output_31_0.png)
 
 
-ANSWER: It can be seen on the graphs above that historically, movies intended for all / most audiences generate the most revenue. The most profitable movies in history were PG-13 movies, followed by PG movies. Historically, on average, G, PG, and PG-13 movies generate almost the same revenue and R and Non-Rated movies cannot compete with them. 
-The hypothesis is that G, PG, and PG-13 movies have a much larger audience due to not having viewing restrictions. R rated movies are for adults only and NR movies aren't marketed the same way as other ratings.
+**ANSWER:** 
+- **Microsoft's new movie studio should look into mainly developing PG-13, PG, and G movies.**
+
+
+- It can be seen on the graphs above that historically, movies intended for all / most audiences generate the most revenue.
+- The most profitable movies in history were PG-13 movies, followed by PG movies. Historically, on average, G, PG, and PG-13 movies generate almost the same revenue.
+- R and Non-Rated movies cannot compete with them.
+- The hypothesis is that G, PG, and PG-13 movies have a much larger audience due to not having viewing restrictions. R rated movies are for adults only and NR movies aren't marketed the same way as other ratings.
 
 # QUESTION 2: Correlation Between Movie Budget vs. Movie Revenue
 
@@ -1106,7 +1122,7 @@ plt.show()
 ```
 
 
-![png](output_33_0.png)
+![png](output_35_0.png)
 
 
 
@@ -1124,10 +1140,16 @@ plt.show()
 ```
 
 
-![png](output_34_0.png)
+![png](output_36_0.png)
 
 
-ANSWER: There is a positive correlation of 0.712 between Movie Revenue and Movie Budget. That means that the more a studio invests in a movie, the higher it's revenue will be. This is not a guarantee, since the correlation is not 1.0. Other factors may affect the success of a movie, such as actors, directors, genre, and rating. 
+**ANSWER:**
+- Microsoft should take in consideration the amount of money it is willing to invest on it's new movie studio.
+
+
+- There is a **positive correlation of 0.712 between Movie Revenue and Movie Budget**. 
+    - That means that the more a studio invests in a movie, the higher it's revenue will be. 
+    - This is not a guarantee, since the correlation is not 1.0. Other factors may affect the success of a movie, such as actors, directors, genre, and rating.    
 
 # HONORABLE MENTION 1: Correlation Between User_Score and Revenue
 
@@ -1156,13 +1178,7 @@ ANSWER: There is a positive correlation of 0.712 between Movie Revenue and Movie
 
 ```
 
-
-![png](output_38_0.png)
-
-
-
-![png](output_38_1.png)
-
+Even though movie revenue and user score seem to be correlated by taking a quick look at the graphs, with further analysis, it becomes clear that both values aren't correlated. This topic wasn't worth investigating further.
 
 # QUESTION 3: Most Profitable Genres and Genres R.O.I
 
@@ -1350,7 +1366,7 @@ plt.show()
 ```
 
 
-![png](output_43_0.png)
+![png](output_46_0.png)
 
 
 
@@ -1367,7 +1383,7 @@ plt.show()
 ```
 
 
-![png](output_44_0.png)
+![png](output_47_0.png)
 
 
 
@@ -1398,11 +1414,17 @@ plt.show()
 ```
 
 
-![png](output_46_0.png)
+![png](output_49_0.png)
 
 
-ANSWER: On average, the 3 most profitable genres are adventure, animation, and fantasy. This was calculated by extracting the movie's revenue based on which genres it contained. The average revenue and not total revenue was calculated because most movies have more than 1 genre listed,so it was a way to weight the power of each genre. These 3 genres are also the ones that require the highest budget, so the studio needs to invest a lot of money to acquire those revenues.
-If the studio doesn't have $100's of millions to develop  such movies, it can invest in low budget movies that give the highest return of investment, such as horror and romance movies.
+**ANSWER:**
+- On average, the 3 most profitable genres are **adventure, animation, and fantasy**.
+    - This was calculated by extracting the movie's revenue based on which genres it contained.
+    - The average revenue and not total revenue was calculated because most movies have more than 1 genre listed,so it was a way to weight each genre. 
+    - These 3 genres are also the ones that require the highest budget, so the studio needs to invest a lot of money to acquire those revenues.
+    
+    
+- If Microsoft doesn't have **$100's of millions** to develop  such movies, it can invest in low budget movies that give the highest return of investment, such as **horror** and **romance** movies.
 
 # HONORABLE MENTION 2: Most Profitable Actors and Directors (Historically)
 
@@ -1549,6 +1571,8 @@ If the studio doesn't have $100's of millions to develop  such movies, it can in
 # ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
 # plt.show()
 ```
+
+- While working on the most profitable directors and actors, it was noticed that it wouldn't be as relevant because since the Data Frame has information about movies going back to 1930's, the director/actor could not be at his/her prime or could even be dead. It was decided to analyze more recent movies.
 
 # QUESTION 4 - Most Profitable Actors and Directors in Last 20 Years.
 
@@ -1733,7 +1757,7 @@ plt.show()
 
 #CREATING A AVERAGE MOVIE REVENUE BY ACTOR GRAPH
 plt.figure(figsize = (30,8))
-avg_barplot = sns.barplot(x="Actor", y="Revenue_Sum",  data=sum_actor_df[2:12] ,palette = ('ocean_r'))
+avg_barplot = sns.barplot(x="Actor", y="Revenue_Sum",  data=sum_actor_df[2:12] ,palette = ('ocean_r'),)
 plt.title('TOP 10 ACTORS WITH HIGHEST MOVIE REVENUE IN LAST 20 YRS',fontsize=18, color = 'darkblue')
 plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
 plt.xlabel('ACTORS',fontsize=18, color = 'darkblue')
@@ -1743,19 +1767,63 @@ plt.show()
 ```
 
 
-![png](output_72_0.png)
+![png](output_76_0.png)
 
 
 
-![png](output_72_1.png)
+![png](output_76_1.png)
 
-
-ANSWER: The 10 most profitable directors in the last 20 years are Anthony Russo, Joe Russo, David Yates, J.J Abrams, Pierre Coffin, Joss Whedon, Jon Favreau, James Wan, Christopher Nolan, and Peter Jackson.
-The 10 most profitable actors/actresses in that last 20 years are Scarlett Johansson, Robert Downey Jr., Chris Hemsworth, Samuel L. Jackson, Chris Evans, Jeremy Renner, Dwayne Johnson, Don Cheadle, Mark Ruffalo, and Benedict Cumberbatch.
-
-If a new studio wants to create movies that are able to compete with today's top movies, they should look into hiring some of the directors and actors from the list above. More research needs to be done to determine in which movie genre they were most successful.
 
 
 ```python
+#CREATING A MOVIE REVENUE BY DIRECTOR GRAPH
+fig,axes = plt.subplots(ncols=2,figsize = (20,15))
+avg_barplot = sns.barplot(y="director", x="Revenue_Sum",  data=sum_director_df[1:11] ,palette = ('ocean_r'),
+                         ax=axes[0],orient='h')
+ax = axes[0]
+ax.set_title('TOP 10 DIRECTORS WITH HIGHEST MOVIE REVENUE IN LAST 20 YRS',fontsize=18, color = 'darkblue')
+ax.set_xlabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
+ax.set_ylabel('DIRECTORS',fontsize=18, color = 'darkblue')
 
+ax.xaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
+
+
+#CREATING A AVERAGE MOVIE REVENUE BY ACTOR GRAPH
+avg_barplot = sns.barplot(y="Actor", x="Revenue_Sum",  data=sum_actor_df[2:12] ,palette = ('ocean_r'),
+                         ax=axes[1],orient='h')
+ax = axes[1]
+ax.set_title('TOP 10 ACTORS WITH HIGHEST MOVIE REVENUE IN LAST 20 YRS',fontsize=18, color = 'darkblue')
+ax.set_xlabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
+ax.set_ylabel('ACTORS',fontsize=18, color = 'darkblue')
+
+ax.xaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
+plt.suptitle('TOP ACTORS AND DIRECTORS',y=1.05,fontsize=18, color = 'darkblue',weight='bold')
+plt.tight_layout()
 ```
+
+
+![png](output_77_0.png)
+
+
+**ANSWER:**
+- The 10 most profitable directors in the last 20 years are Anthony Russo, Joe Russo, David Yates, J.J Abrams, Pierre Coffin, Joss Whedon, Jon Favreau, James Wan, Christopher Nolan, and Peter Jackson.
+- The 10 most profitable actors/actresses in that last 20 years are Scarlett Johansson, Robert Downey Jr., Chris Hemsworth, Samuel L. Jackson, Chris Evans, Jeremy Renner, Dwayne Johnson, Don Cheadle, Mark Ruffalo, and Benedict Cumberbatch.
+
+
+- **If Microsoft wants to create movies that are able to compete with today's top movies, they should look into hiring some of the directors and actors from the list above. More research needs to be done to determine in which movie genre they were most successful.**
+
+
+# CONCLUSION
+
+**In order to create successful movies, Microsoft needs to do the following.**
+- Be willing to invest a lot of money. As shown in the movie budget vs movie revenue correlation, the more money that is invested into creating a movie, the higher the return will be. The money needs to be invested properly, by picking the appropriate movie ratings and genres.
+
+
+- Historically, most movies developed have been rated for all/most audiences. The reason for that is that PG-13, PG, and G rated movies generate the most income due to their ability to reach most audiences. 
+
+
+- Also, the most successful movie genres are also the ones that require the highest investment. If Microsoft doesn't want to invest too much, a good alternative would be Horror and Romance movies because they give a high return of investment. **PLEASE STAY AWAY FROM WAR MOVIES!**
+
+
+- In order to create profitable movies, Microsoft will need to hire the best directors and actors available in the market today. By picking the most profitable directors and actors of the last 20 years, it is almost certain that they will create an extraordinary movie. More research is needed in order to place such directors and actors in the appropriate movie genres in order to guarantee success.
+
