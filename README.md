@@ -27,177 +27,173 @@ import seaborn as sns
 
 #   WEBSCRAPING TRIAL CODE
 
-
 ```python
-# #PAGE TO GET DATA FROM
-# html_page = requests.get('https://www.themoviedb.org/movie/top-rated?page=143')
-# soup = BeautifulSoup(html_page.content, 'html.parser')
+#PAGE TO GET DATA FROM
+html_page = requests.get('https://www.themoviedb.org/movie/top-rated?page=143')
+soup = BeautifulSoup(html_page.content, 'html.parser')
 ```
 
+```python
+# GETTING SPECIFIC MOVIE URL TO EXTRACT THE DATA AND ADDING IT TO A LIST
+base_url = 'https://www.themoviedb.org/'
+movies_data = soup.find('section', id='media_results')
+movie_entries = movies_data.findAll('a', class_='image')
+movie_titles = []
+movie_pages = []
+
+#LINK CONSISTS OF BASE_URL LINK + MODIFIED MOVIE TITLE
+for entry in movie_entries:    
+    title = entry.get('title')
+    ext_1 = entry.get('href').split('/movie/')
+    ext_2 = title.replace(' ','-').replace('/','-')
+    url = base_url+'movie/'+ext_1[1]+'-'+ext_2
+    movie_titles.append(title)
+    movie_pages.append(url)
+    ```
 
 ```python
-# # GETTING SPECIFIC MOVIE URL TO EXTRACT THE DATA AND ADDING IT TO A LIST
-# base_url = 'https://www.themoviedb.org/'
-# movies_data = soup.find('section', id='media_results')
-# movie_entries = movies_data.findAll('a', class_='image')
-# movie_titles = []
-# movie_pages = []
-
-# #LINK CONSISTS OF BASE_URL LINK + MODIFIED MOVIE TITLE
-# for entry in movie_entries:    
-#     title = entry.get('title')
-#     ext_1 = entry.get('href').split('/movie/')
-#     ext_2 = title.replace(' ','-').replace('/','-')
-#     url = base_url+'movie/'+ext_1[1]+'-'+ext_2
-#     movie_titles.append(title)
-#     movie_pages.append(url)
+#SAMPLING MOVIE TITLE
+movie_titles
 ```
 
-
 ```python
-# movie_titles
+#TRIAL TO GET DATA FROM SPECIFIC PAGE
+html_page_2 = requests.get(movie_pages[15])
+soup_2 = BeautifulSoup(html_page_2.content, 'html.parser')
+
+#GETTING CAST INFORMATION
+html_page_3 = requests.get(movie_pages[15]+'/cast')
+soup_3 = BeautifulSoup(html_page_3.content, 'html.parser')
+print(movie_pages[15]+'/cast')
 ```
 
-
 ```python
-# #TRIAL TO GET DATA FROM SPECIFIC PAGE
-# html_page_2 = requests.get(movie_pages[15])
-# soup_2 = BeautifulSoup(html_page_2.content, 'html.parser')
-
-# #GETTING CAST INFORMATION
-# html_page_3 = requests.get(movie_pages[15]+'/cast')
-# soup_3 = BeautifulSoup(html_page_3.content, 'html.parser')
-# print(movie_pages[15]+'/cast')
-```
-
-
-```python
-# # for i in list(range(0,20)):
-#     html_page_2 = requests.get(movie_pages[i])
-#     soup_2 = BeautifulSoup(html_page_2.content, 'html.parser')
-#     html_page_3 = requests.get(movie_pages[i]+'/cast')
-#     soup_3 = BeautifulSoup(html_page_3.content, 'html.parser')
+# for i in list(range(0,20)):
+    html_page_2 = requests.get(movie_pages[i])
+    soup_2 = BeautifulSoup(html_page_2.content, 'html.parser')
+    html_page_3 = requests.get(movie_pages[i]+'/cast')
+    soup_3 = BeautifulSoup(html_page_3.content, 'html.parser')
     
-#     #GETTING MOVIE TITLE
+    #GETTING MOVIE TITLE
        
-#     specific_movie_data_1 = soup_2.find('div', class_='single_column')
-#     try:
-#         title = specific_movie_data_1.find('h2').text.split('(')[0].strip()
-#         print(title)
-#     except:
-#         title = None
-#         print(title)
+    specific_movie_data_1 = soup_2.find('div', class_='single_column')
+    try:
+        title = specific_movie_data_1.find('h2').text.split('(')[0].strip()
+        print(title)
+    except:
+        title = None
+        print(title)
     
-#     #GETTING RELEASE DATE
-#     try:
-#         release_date = specific_movie_data_1.find('span',class_='release').text.strip().split('(')[0]
-#         print(release_date)
-#     except:
-#         release_date = None
-#         print(release_date)
+    #GETTING RELEASE DATE
+    try:
+        release_date = specific_movie_data_1.find('span',class_='release').text.strip().split('(')[0]
+        print(release_date)
+    except:
+        release_date = None
+        print(release_date)
     
-#     #GETTING GENRE LIST
-#     try:
-#         genre_list = []
-#         for genre in specific_movie_data_1.find('span',class_='genres').findAll('a'):
-#             genre_list.append(genre.text)
-#         print(genre_list)
-#     except:
-#         genre_list = None
-#         print(genre_list)
+    #GETTING GENRE LIST
+    try:
+        genre_list = []
+        for genre in specific_movie_data_1.find('span',class_='genres').findAll('a'):
+            genre_list.append(genre.text)
+        print(genre_list)
+    except:
+        genre_list = None
+        print(genre_list)
     
-#     #GETTING LENGTH OF MOVIE
-#     try:
-#         run_time = specific_movie_data_1.find('span',class_='runtime').text.strip()
-#         print(run_time)
-#     except:
-#         run_time = None
-#         print(run_time)
+    #GETTING LENGTH OF MOVIE
+    try:
+        run_time = specific_movie_data_1.find('span',class_='runtime').text.strip()
+        print(run_time)
+    except:
+        run_time = None
+        print(run_time)
         
-#     #GETTING MOVIE CERTIFICATION
-#     try:
-#         certification = specific_movie_data_1.find('span',class_='certification').text.strip()
-#         print(certification)
-#     except:
-#         certification = None
-#         print(certification)
+    #GETTING MOVIE CERTIFICATION
+    try:
+        certification = specific_movie_data_1.find('span',class_='certification').text.strip()
+        print(certification)
+    except:
+        certification = None
+        print(certification)
     
-#     #GETTING AVERAGE MOVIE RATING
-#     try:
-#         user_score = specific_movie_data_1.find('div',class_='percent').find('span').get('class')[1].split('-r')[-1]
-#         print(user_score)
-#     except:
-#         user_score = None
-#         print(user_score)
+    #GETTING AVERAGE MOVIE RATING
+    try:
+        user_score = specific_movie_data_1.find('div',class_='percent').find('span').get('class')[1].split('-r')[-1]
+        print(user_score)
+    except:
+        user_score = None
+        print(user_score)
     
-#     #GETTING LANGUAGE, BUDGET, AND REVENUE FROM FACTS LEFT_COLUMN
-#     specific_movie_data_2 = soup_2.find('section', class_='facts left_column')
-#     for data in specific_movie_data_2.findAll('p'):
-#         if data.text.split()[1] == 'Language':
-#             original_language = data.text.split()[-1]
-#             print(original_language)
+    #GETTING LANGUAGE, BUDGET, AND REVENUE FROM FACTS LEFT_COLUMN
+    specific_movie_data_2 = soup_2.find('section', class_='facts left_column')
+    for data in specific_movie_data_2.findAll('p'):
+        if data.text.split()[1] == 'Language':
+            original_language = data.text.split()[-1]
+            print(original_language)
             
-#         #USED NESTED IF STATEMENTS BECAUSE SOME MOVIES DON'T HAVE BUDGET OR REVENUE DATA
-#         elif data.text.split()[0] == 'Budget':
-#             if data.text.split()[-1] == '-':
-#                 movie_budget = None
-#                 print(movie_budget)
-#             else:
-#                 movie_budget = int(data.text.split()[-1].strip('$').replace(',','').replace('.00',''))
-#                 print(movie_budget)
-#         elif data.text.split()[0] == 'Revenue':
-#             if data.text.split()[-1] == '-':
-#                 movie_revenue = None
-#                 print(movie_revenue)
-#             else:        
-#                 movie_revenue = int(data.text.split()[-1].strip('$').replace(',','').replace('.00',''))
-#                 print(movie_revenue)
+        #USED NESTED IF STATEMENTS BECAUSE SOME MOVIES DON'T HAVE BUDGET OR REVENUE DATA
+        elif data.text.split()[0] == 'Budget':
+            if data.text.split()[-1] == '-':
+                movie_budget = None
+                print(movie_budget)
+            else:
+                movie_budget = int(data.text.split()[-1].strip('$').replace(',','').replace('.00',''))
+                print(movie_budget)
+        elif data.text.split()[0] == 'Revenue':
+            if data.text.split()[-1] == '-':
+                movie_revenue = None
+                print(movie_revenue)
+            else:        
+                movie_revenue = int(data.text.split()[-1].strip('$').replace(',','').replace('.00',''))
+                print(movie_revenue)
                 
-#     #GETTING MOVIE KEYWORDS
-#     specific_movie_data_3 = soup_2.find('section',class_='keywords right_column')
-#     keyword_list = []
-#     for keyword in specific_movie_data_3.findAll('a'):
-#         keyword_list.append(keyword.text)
-#     print(keyword_list)
+    #GETTING MOVIE KEYWORDS
+    specific_movie_data_3 = soup_2.find('section',class_='keywords right_column')
+    keyword_list = []
+    for keyword in specific_movie_data_3.findAll('a'):
+        keyword_list.append(keyword.text)
+    print(keyword_list)
     
-#     #GETTING LIST OF ACTORS
-#     specific_movie_data_4 = soup_2.find('ol',class_='people scroller')
-#     actors_list = []
-#     #USED TRY BECAUSE SOME PAGES ARE MISSING ACTORS DATA
-#     try:
-#         for actor in specific_movie_data_4.findAll('p'):
-#             if actor.find('a') != None:
-#                 if actor.find('a').text != 'View More ':
-#                     actors_list.append(actor.find('a').text)
-#         print(actors_list)
-#     except:
-#         actors_list.append(None)
-#         print(actors_list)
+    #GETTING LIST OF ACTORS
+    specific_movie_data_4 = soup_2.find('ol',class_='people scroller')
+    actors_list = []
+    #USED TRY BECAUSE SOME PAGES ARE MISSING ACTORS DATA
+    try:
+        for actor in specific_movie_data_4.findAll('p'):
+            if actor.find('a') != None:
+                if actor.find('a').text != 'View More ':
+                    actors_list.append(actor.find('a').text)
+        print(actors_list)
+    except:
+        actors_list.append(None)
+        print(actors_list)
         
-#      #GETTING DIRECTOR'S NAME
-#     try:
-#         specific_movie_data_5 = soup_3.findAll('section',class_='panel pad')[1]
-#         #print(specific_movie_data_5)
-#         count = 0
-#         crew_list = []
-#         director_list = []
-#         for crew_member in specific_movie_data_5.findAll('p'):
-#             count += 1
-#             crew_list.append(crew_member)
-#             if crew_member.text.strip() == 'Director':
-#                 director_position = count-2
-#                 director = crew_list[director_position].text
-#                 director_list.append(director)
-#         print(director_list)
-#         print('\n')
-#     except:
-#         director_list = None
-#         print(director_list)
-# #writer = crew_list[writer_position].text
-# #print(writer)
-# #visual_prod = crew_list[visual_position].text
-# #print(visual_prod)
-```
+     #GETTING DIRECTOR'S NAME
+    try:
+        specific_movie_data_5 = soup_3.findAll('section',class_='panel pad')[1]
+        #print(specific_movie_data_5)
+        count = 0
+        crew_list = []
+        director_list = []
+        for crew_member in specific_movie_data_5.findAll('p'):
+            count += 1
+            crew_list.append(crew_member)
+            if crew_member.text.strip() == 'Director':
+                director_position = count-2
+                director = crew_list[director_position].text
+                director_list.append(director)
+        print(director_list)
+        print('\n')
+    except:
+        director_list = None
+        print(director_list)
+#writer = crew_list[writer_position].text
+#print(writer)
+#visual_prod = crew_list[visual_position].text
+#print(visual_prod)
+                                                               ```
 
 # WEBSCRAPPING FUNCTIONS
 
@@ -371,27 +367,25 @@ test_df = scrape_movies_list('https://www.themoviedb.org/movie/top-rated?page=14
 
 ```
 
-
 ```python
-# #COMBINING NEXT_PAGE AND SCRAPE_MOVIES_LIST FUNCTIONS TO GATHER MOVIE INFO FROM WHOLE WEBSITE
-# i = 0 
-# lists_df = []
-# base_url = 'https://www.themoviedb.org/movie/top-rated?page=0'
-# while i <= 290:
-#     base_url = next_page(base_url)
-#     df = scrape_movies_list(base_url)
-#     i += 1
-#     lists_df.append(df)
-#     df = pd.concat(lists_df)
-#     print(i)
-#     time.sleep(.2)
-# df    
+#COMBINING NEXT_PAGE AND SCRAPE_MOVIES_LIST FUNCTIONS TO GATHER MOVIE INFO FROM WHOLE WEBSITE
+i = 0 
+lists_df = []
+base_url = 'https://www.themoviedb.org/movie/top-rated?page=0'
+while i <= 290:
+    base_url = next_page(base_url)
+    df = scrape_movies_list(base_url)
+    i += 1
+    lists_df.append(df)
+    df = pd.concat(lists_df)
+    print(i)
+    time.sleep(.2)
+df    
 ```
 
-
 ```python
-#SAVING DATAFRAME!
-# df.to_csv('tmdb_webscraping.csv')
+SAVING DATAFRAME!
+df.to_csv('tmdb_webscraping.csv')
 ```
 
 # FORMATING THE DATA
@@ -399,7 +393,7 @@ test_df = scrape_movies_list('https://www.themoviedb.org/movie/top-rated?page=14
 
 ```python
 df = pd.read_csv('tmdb_webscraping.csv')
-df.head()
+df
 ```
 
 
@@ -519,8 +513,105 @@ df.head()
       <td>['Ryunosuke Kamiki', 'Mone Kamishiraishi', 'Ma...</td>
       <td>['Makoto Shinkai']</td>
     </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>5812</td>
+      <td>0</td>
+      <td>Epic Movie</td>
+      <td>01/26/2007</td>
+      <td>['Action', 'Adventure', 'Comedy']</td>
+      <td>1h 26m</td>
+      <td>PG-13</td>
+      <td>34</td>
+      <td>English</td>
+      <td>20000000.0</td>
+      <td>86865564.0</td>
+      <td>[]</td>
+      <td>['Kal Penn', 'Adam Campbell', 'Jennifer Coolid...</td>
+      <td>['Aaron Seltzer', 'Jason Friedberg']</td>
+    </tr>
+    <tr>
+      <td>5813</td>
+      <td>0</td>
+      <td>Alone in the Dark</td>
+      <td>01/28/2005</td>
+      <td>['Action', 'Fantasy', 'Horror', 'Thriller']</td>
+      <td>1h 36m</td>
+      <td>R</td>
+      <td>32</td>
+      <td>English</td>
+      <td>20000000.0</td>
+      <td>10442808.0</td>
+      <td>['detective', 'monster', 'professor', 'island'...</td>
+      <td>['Christian Slater', 'Tara Reid', 'Stephen Dor...</td>
+      <td>['Uwe Boll']</td>
+    </tr>
+    <tr>
+      <td>5814</td>
+      <td>0</td>
+      <td>Disaster Movie</td>
+      <td>08/29/2008</td>
+      <td>['Action', 'Comedy']</td>
+      <td>1h 27m</td>
+      <td>PG-13</td>
+      <td>31</td>
+      <td>English</td>
+      <td>25000000.0</td>
+      <td>14109284.0</td>
+      <td>['natural disaster', 'violence', 'mortal dange...</td>
+      <td>['Matt Lanter', 'Vanessa Lachey', 'Crista Flan...</td>
+      <td>['Jason Friedberg', 'Aaron Seltzer']</td>
+    </tr>
+    <tr>
+      <td>5815</td>
+      <td>0</td>
+      <td>Battlefield Earth</td>
+      <td>05/10/2000</td>
+      <td>['Action', 'Science Fiction', 'War']</td>
+      <td>1h 58m</td>
+      <td>PG-13</td>
+      <td>29</td>
+      <td>English</td>
+      <td>44000000.0</td>
+      <td>21400000.0</td>
+      <td>['based on novel or book', 'post-apocalyptic f...</td>
+      <td>['John Travolta', 'Barry Pepper', 'Forest Whit...</td>
+      <td>['Roger Christian']</td>
+    </tr>
+    <tr>
+      <td>5816</td>
+      <td>0</td>
+      <td>Dragonball Evolution</td>
+      <td>04/08/2009</td>
+      <td>['Action', 'Adventure', 'Fantasy', 'Science Fi...</td>
+      <td>1h 25m</td>
+      <td>PG</td>
+      <td>26</td>
+      <td>English</td>
+      <td>100000000.0</td>
+      <td>57497699.0</td>
+      <td>['karate', 'superhero', 'revenge', 'dragon', '...</td>
+      <td>['Justin Chatwin', 'Chow Yun-Fat', 'Joon Park'...</td>
+      <td>['James Wong']</td>
+    </tr>
   </tbody>
 </table>
+<p>5817 rows × 13 columns</p>
 </div>
 
 
@@ -975,7 +1066,9 @@ filtered_rating_df = df[(df['rating'] == 'R') | (df['rating'] == 'PG')|
 
 ```python
 #PLOTTING REVENUE BY MOVIE RATING
-sns.catplot(x="rating", y="movie_revenue", kind="swarm", data=filtered_rating_df,height=7, aspect=1.5,palette = ('ocean_r'))
+order_list = ['G','PG','PG-13','R','NR']
+sns.catplot(x="rating", y="movie_revenue", kind="swarm", data=filtered_rating_df,
+            height=7, aspect=1.5,palette = ('ocean_r'), order=order_list)
 sns.set_context('talk')
 plt.title('REVENUE BY MOVIE RATING',fontsize=30, color = 'darkblue')
 plt.ylabel('MOVIE REVENUE [$]',fontsize=20, color = 'darkblue')
@@ -985,8 +1078,14 @@ ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
 plt.show()
 ```
 
+    C:\Users\Biel_\anaconda3\envs\learn-env\lib\site-packages\seaborn\categorical.py:1324: RuntimeWarning: invalid value encountered in less
+      off_low = points < low_gutter
+    C:\Users\Biel_\anaconda3\envs\learn-env\lib\site-packages\seaborn\categorical.py:1328: RuntimeWarning: invalid value encountered in greater
+      off_high = points > high_gutter
+    
 
-![png](output_30_0.png)
+
+![png](output_30_1.png)
 
 
 
@@ -1014,7 +1113,7 @@ sns.set_context('talk')
 #SETTING STYLE FOR FUTURE PLOTS
 sns.set_style('darkgrid')
 
-barplot = sns.barplot(x=rating_list,y=mean_rev_list,palette = ('ocean_r'))
+barplot = sns.barplot(x=rating_list,y=mean_rev_list,palette = ('ocean_r'), order = order_list)
 
 plt.title('AVERAGE MOVIE REVENUE BY RATING',y=1, fontsize=20, color = 'darkblue')
 plt.ylabel('MOVIE REVENUE[$]',fontsize = 20,color = 'darkblue')
@@ -1147,29 +1246,26 @@ plt.show()
 
 # HONORABLE MENTION 1: Correlation Between User_Score and Revenue
 
-
 ```python
-# #GROUPING MOVIE USER SCORES BY 10's
-# df['user_score_tens'] = df.user_score // 10 * 10
+#GROUPING MOVIE USER SCORES BY 10's
+df['user_score_tens'] = df.user_score // 10 * 10
 ```
 
-
 ```python
-# #GRAPHING MOVIE USER SCORE vs. MOVIE REVENUE
-# sns.set_style('darkgrid')
-# sns.lmplot(x="user_score_tens", y="movie_revenue", data=df,height=6, aspect=1.5, palette = ('ocean')).set(
-#     title='MOVIE USER SCORE vs. MOVIE REVENUE', ylabel='MOVIE REVENUE',xlabel=('USER SCORE(10"s)'))
-# sns.set_style('darkgrid')
-# ax = plt.gca()
-# ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
+#GRAPHING MOVIE USER SCORE vs. MOVIE REVENUE
+sns.set_style('darkgrid')
+sns.lmplot(x="user_score_tens", y="movie_revenue", data=df,height=6, aspect=1.5, palette = ('ocean')).set(
+    title='MOVIE USER SCORE vs. MOVIE REVENUE', ylabel='MOVIE REVENUE',xlabel=('USER SCORE(10"s)'))
+sns.set_style('darkgrid')
+ax = plt.gca()
+ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
 
-# sns.catplot(x="user_score_tens", y="movie_revenue", kind="swarm", data=df,height=6, aspect=1.5).set(
-#     title='MOVIE USER SCORE vs. MOVIE REVENUE', ylabel='MOVIE REVENUE',xlabel=('USER SCORE(10"s)'))
-# sns.set_context('talk')
-# ax = plt.gca()
-# ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
-# plt.show()
-
+sns.catplot(x="user_score_tens", y="movie_revenue", kind="swarm", data=df,height=6, aspect=1.5).set(
+    title='MOVIE USER SCORE vs. MOVIE REVENUE', ylabel='MOVIE REVENUE',xlabel=('USER SCORE(10"s)'))
+sns.set_context('talk')
+ax = plt.gca()
+ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
+plt.show()
 ```
 
 Even though movie revenue and user score seem to be correlated by taking a quick look at the graphs, with further analysis, it becomes clear that both values aren't correlated. This topic wasn't worth investigating further.
@@ -1422,148 +1518,137 @@ plt.show()
 
 # HONORABLE MENTION 2: Most Profitable Actors and Directors (Historically)
 
-
 ```python
-# # #CREATING A LIST WITH ALL ACTORS NAMES
-# actors_list = list(set(','.join(df['actors']).replace('[','').replace(']','').replace("'",'').replace('"','').split(',')))
+#CREATING A LIST WITH ALL ACTORS NAMES
+actors_list = list(set(','.join(df['actors']).replace('[','').replace(']','').replace("'",'').replace('"','').split(',')))
 
-# #CHECKING LEN OF ACTORS LIST
-# print(len(actors_list))
+#CHECKING LEN OF ACTORS LIST
+print(len(actors_list))
 
-# #CREATING A LIST WITH ALL DIRECTOR NAMES
-# directors_list = list(set(','.join(director_df['director_list']).replace('[','').replace(']','').replace("'",'').replace('"','').split(',')))
+#CREATING A LIST WITH ALL DIRECTOR NAMES
+directors_list = list(set(','.join(director_df['director_list']).replace('[','').replace(']','').replace("'",'').replace('"','').split(',')))
 
-# #CHECKING LEN OF ACTORS LIST
-# print(len(directors_list))
+#CHECKING LEN OF ACTORS LIST
+print(len(directors_list))
 ```
 
-
 ```python
-# #CREATING A SECOND LIST TO REMOVE SPACES AT BEGINING OF NAMES
-# actors_list_2 = []
-# for name in actors_list:
-#     if name.startswith(' '):
-#         name = name.replace(' ','',1)
-#         actors_list_2.append(name)
-#     else:
-#         actors_list_2.append(name)
+#CREATING A SECOND LIST TO REMOVE SPACES AT BEGINING OF NAMES
+actors_list_2 = []
+for name in actors_list:
+    if name.startswith(' '):
+        name = name.replace(' ','',1)
+        actors_list_2.append(name)
+    else:
+        actors_list_2.append(name)
 
-# #CHECKING LEN OF LIST TO SEE IF IT MATCHES THE FIRST ONE
-# len(actors_list_2)
+#CHECKING LEN OF LIST TO SEE IF IT MATCHES THE FIRST ONE
+len(actors_list_2)
 ```
 
-
 ```python
-# #CREATING A SECOND LIST TO REMOVE SPACES AT BEGINING OF NAMES
-# directors_list_2 = []
-# for name in directors_list:
-#     if name.startswith(' '):
-#         name = name.replace(' ','',1)
-#         directors_list_2.append(name)
-#     else:
-#         directors_list_2.append(name)
+#CREATING A SECOND LIST TO REMOVE SPACES AT BEGINING OF NAMES
+directors_list_2 = []
+for name in directors_list:
+    if name.startswith(' '):
+        name = name.replace(' ','',1)
+        directors_list_2.append(name)
+    else:
+        directors_list_2.append(name)
 
-# #CHECKING LEN OF LIST TO SEE IF IT MATCHES THE FIRST ONE
-# len(directors_list_2)
+#CHECKING LEN OF LIST TO SEE IF IT MATCHES THE FIRST ONE
+len(directors_list_2)
 ```
 
-
 ```python
-# #ACTORS DICTIONARY FOR THE FOR LOOP
-# actors_dict = {}
+#ACTORS DICTIONARY FOR THE FOR LOOP
+actors_dict = {}
 
-# #FOR LOOP TO GET MOVIE REVENUE BASED ON ACTORS     
-# for actor in actors_list_2:
-#     actors_dict[actor] = []
-#     for index,bol in enumerate(df['actors'].str.contains(actor)):
-#         if bol == True:
-#             if df['movie_revenue'][index] > 0:      
-#                 actors_dict[actor].append(df['movie_revenue'][index])
+#FOR LOOP TO GET MOVIE REVENUE BASED ON ACTORS     
+for actor in actors_list_2:
+    actors_dict[actor] = []
+    for index,bol in enumerate(df['actors'].str.contains(actor)):
+        if bol == True:
+            if df['movie_revenue'][index] > 0:      
+                actors_dict[actor].append(df['movie_revenue'][index])
 
 
-# directors_dict = {}
-# #FOR LOOP TO GET MOVIE REVENUE BASED ON DIRECTORS     
-# for director in directors_list_2:
-#     directors_dict[director] = []
-#     for index,bol in enumerate(director_df['director_list'].str.contains(director)):
-#         if bol == True:
-#             if df['movie_revenue'][index] > 0:      
-#                 directors_dict[director].append(df['movie_revenue'][index])
-
+directors_dict = {}
+#FOR LOOP TO GET MOVIE REVENUE BASED ON DIRECTORS     
+for director in directors_list_2:
+    directors_dict[director] = []
+    for index,bol in enumerate(director_df['director_list'].str.contains(director)):
+        if bol == True:
+            if df['movie_revenue'][index] > 0:      
+                directors_dict[director].append(df['movie_revenue'][index])
 ```
 
-
 ```python
-# #GETTING ACTOR AVERAGE REVENUE
-# actors_dict_avg = {}
-# for actor in actors_list_2:
+#GETTING ACTOR AVERAGE REVENUE
+actors_dict_avg = {}
+for actor in actors_list_2:
     
-#     if len(actors_dict[actor]) > 0:
-#         actors_dict_avg[actor] = []
-#         avg = round(sum(actors_dict[actor])/len(actors_dict[actor]),0)
-#         actors_dict_avg[actor].append(avg)
+    if len(actors_dict[actor]) > 0:
+        actors_dict_avg[actor] = []
+        avg = round(sum(actors_dict[actor])/len(actors_dict[actor]),0)
+        actors_dict_avg[actor].append(avg)
         
-# #CREATING AN ACTOR AVG REVENUE DF 
-# avg_actor_df = pd.DataFrame(actors_dict_avg).transpose()
-# avg_actor_df.reset_index(inplace=True)
-# avg_actor_df.columns = (['Actor','Average_Revenue'])
-# avg_actor_df.sort_values('Average_Revenue',inplace=True, ascending = False)
+#CREATING AN ACTOR AVG REVENUE DF 
+avg_actor_df = pd.DataFrame(actors_dict_avg).transpose()
+avg_actor_df.reset_index(inplace=True)
+avg_actor_df.columns = (['Actor','Average_Revenue'])
+avg_actor_df.sort_values('Average_Revenue',inplace=True, ascending = False)
 ```
 
-
 ```python
-# #CHECKING DF
-# avg_actor_df[:10]
+#CHECKING DF
+avg_actor_df[:10]
 ```
 
-
 ```python
-# #CREATING A AVERAGE MOVIE REVENUE BY ACTOR GRAPH
-# plt.figure(figsize = (25,8))
-# avg_barplot = sns.barplot(x="Actor", y="Average_Revenue",  data=avg_actor_df[:10] ,palette = ('ocean_r'))
-# plt.title('TOP 10 ACTORS WITH HIGHEST AVERAGE MOVIE REVENUE',fontsize=18, color = 'darkblue')
-# plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
-# plt.xlabel('ACTORS',fontsize=18, color = 'darkblue')
-# ax = plt.gca()
-# ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
-# plt.show()
+#CREATING A AVERAGE MOVIE REVENUE BY ACTOR GRAPH
+plt.figure(figsize = (25,8))
+avg_barplot = sns.barplot(x="Actor", y="Average_Revenue",  data=avg_actor_df[:10] ,palette = ('ocean_r'))
+plt.title('TOP 10 ACTORS WITH HIGHEST AVERAGE MOVIE REVENUE',fontsize=18, color = 'darkblue')
+plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
+plt.xlabel('ACTORS',fontsize=18, color = 'darkblue')
+ax = plt.gca()
+ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
+plt.show()
 ```
 
-
 ```python
-# #GETTING DIRECTOR AVERAGE MOVIE REVENUE
-# directors_dict_avg = {}
-# for director in directors_list_2:
+#GETTING DIRECTOR AVERAGE MOVIE REVENUE
+directors_dict_avg = {}
+for director in directors_list_2:
     
-#     if len(directors_dict[director]) > 0:
-#         directors_dict_avg[director] = []
-#         avg = round(sum(directors_dict[director])/len(directors_dict[director]),0)
-#         directors_dict_avg[director].append(avg)
+    if len(directors_dict[director]) > 0:
+        directors_dict_avg[director] = []
+        avg = round(sum(directors_dict[director])/len(directors_dict[director]),0)
+        directors_dict_avg[director].append(avg)
         
-# #CREATING AN ACTOR AVG REVENUE DF 
-# avg_director_df = pd.DataFrame(directors_dict_avg).transpose()
-# avg_director_df.reset_index(inplace=True)
-# avg_director_df.columns = (['director','Average_Revenue'])
-# avg_director_df.sort_values('Average_Revenue',inplace=True, ascending = False)
+#CREATING AN ACTOR AVG REVENUE DF 
+avg_director_df = pd.DataFrame(directors_dict_avg).transpose()
+avg_director_df.reset_index(inplace=True)
+avg_director_df.columns = (['director','Average_Revenue'])
+avg_director_df.sort_values('Average_Revenue',inplace=True, ascending = False)
 ```
 
-
 ```python
-# #CHECKING DF
-# avg_director_df[:10]
+#CHECKING DF
+avg_director_df[:10]
 ```
 
-
 ```python
-# #CREATING A AVERAGE MOVIE REVENUE BY DIRECTOR GRAPH
-# plt.figure(figsize = (30,8))
-# avg_barplot = sns.barplot(x="director", y="Average_Revenue",  data=avg_director_df[:10] ,palette = ('ocean_r'))
-# plt.title('TOP 10 DIRECTORS WITH HIGHEST AVERAGE MOVIE REVENUE',fontsize=18, color = 'darkblue')
-# plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
-# plt.xlabel('DIRECTORS',fontsize=18, color = 'darkblue')
-# ax = plt.gca()
-# ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
-# plt.show()
+#CREATING A AVERAGE MOVIE REVENUE BY DIRECTOR GRAPH
+plt.figure(figsize = (30,8))
+avg_barplot = sns.barplot(x="director", y="Average_Revenue",  data=avg_director_df[:10] ,palette = ('ocean_r'))
+plt.title('TOP 10 DIRECTORS WITH HIGHEST AVERAGE MOVIE REVENUE',fontsize=18, color = 'darkblue')
+plt.ylabel('MOVIE REVENUE[$]',fontsize=18, color = 'darkblue')
+plt.xlabel('DIRECTORS',fontsize=18, color = 'darkblue')
+ax = plt.gca()
+ax.yaxis.set_major_formatter(tick.FuncFormatter(reformat_large_tick_values))
+plt.show()
 ```
 
 - While working on the most profitable directors and actors, it was noticed that it wouldn't be as relevant because since the Data Frame has information about movies going back to 1930's, the director/actor could not be at his/her prime or could even be dead. It was decided to analyze more recent movies.
@@ -1573,7 +1658,216 @@ plt.show()
 
 ```python
 director_df = df.dropna(subset = ['director_list'])
+director_df
 ```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>release_date</th>
+      <th>genre</th>
+      <th>run_time</th>
+      <th>rating</th>
+      <th>user_score</th>
+      <th>original_language</th>
+      <th>movie_budget</th>
+      <th>movie_revenue</th>
+      <th>keywords</th>
+      <th>actors</th>
+      <th>director_list</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Dilwale Dulhania Le Jayenge</td>
+      <td>1995-10-20</td>
+      <td>['Comedy', 'Drama', 'Romance']</td>
+      <td>190</td>
+      <td>U</td>
+      <td>88.0</td>
+      <td>Hindi</td>
+      <td>13200000.0</td>
+      <td>100000000.0</td>
+      <td>[]</td>
+      <td>['Shah Rukh Khan', 'Kajol', 'Amrish Puri', 'An...</td>
+      <td>['Aditya Chopra']</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>The Shawshank Redemption</td>
+      <td>1994-10-14</td>
+      <td>['Drama', 'Crime']</td>
+      <td>142</td>
+      <td>R</td>
+      <td>87.0</td>
+      <td>English</td>
+      <td>25000000.0</td>
+      <td>28341469.0</td>
+      <td>['prison', 'corruption', 'police brutality', '...</td>
+      <td>['Tim Robbins', 'Morgan Freeman', 'Bob Gunton'...</td>
+      <td>['Frank Darabont']</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>The Godfather</td>
+      <td>1972-03-15</td>
+      <td>['Drama', 'Crime']</td>
+      <td>175</td>
+      <td>R</td>
+      <td>87.0</td>
+      <td>English</td>
+      <td>6000000.0</td>
+      <td>245066411.0</td>
+      <td>['italy', 'loss of loved one', 'love at first ...</td>
+      <td>['Marlon Brando', 'Al Pacino', 'James Caan', '...</td>
+      <td>['Francis Ford Coppola']</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Schindler's List</td>
+      <td>1994-02-04</td>
+      <td>['Drama', 'History', 'War']</td>
+      <td>195</td>
+      <td>R</td>
+      <td>86.0</td>
+      <td>English</td>
+      <td>22000000.0</td>
+      <td>321365567.0</td>
+      <td>['based on novel or book', 'factory', 'concent...</td>
+      <td>['Liam Neeson', 'Ben Kingsley', 'Ralph Fiennes...</td>
+      <td>['Steven Spielberg']</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Your Name.</td>
+      <td>2016-08-26</td>
+      <td>['Romance', 'Animation', 'Drama']</td>
+      <td>106</td>
+      <td>PG</td>
+      <td>86.0</td>
+      <td>Japanese</td>
+      <td>NaN</td>
+      <td>357986087.0</td>
+      <td>['time travel', 'supernatural', 'afterlife', '...</td>
+      <td>['Ryunosuke Kamiki', 'Mone Kamishiraishi', 'Ma...</td>
+      <td>['Makoto Shinkai']</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <td>5812</td>
+      <td>Epic Movie</td>
+      <td>2007-01-26</td>
+      <td>['Action', 'Adventure', 'Comedy']</td>
+      <td>86</td>
+      <td>PG-13</td>
+      <td>34.0</td>
+      <td>English</td>
+      <td>20000000.0</td>
+      <td>86865564.0</td>
+      <td>[]</td>
+      <td>['Kal Penn', 'Adam Campbell', 'Jennifer Coolid...</td>
+      <td>['Aaron Seltzer', 'Jason Friedberg']</td>
+    </tr>
+    <tr>
+      <td>5813</td>
+      <td>Alone in the Dark</td>
+      <td>2005-01-28</td>
+      <td>['Action', 'Fantasy', 'Horror', 'Thriller']</td>
+      <td>96</td>
+      <td>R</td>
+      <td>32.0</td>
+      <td>English</td>
+      <td>20000000.0</td>
+      <td>10442808.0</td>
+      <td>['detective', 'monster', 'professor', 'island'...</td>
+      <td>['Christian Slater', 'Tara Reid', 'Stephen Dor...</td>
+      <td>['Uwe Boll']</td>
+    </tr>
+    <tr>
+      <td>5814</td>
+      <td>Disaster Movie</td>
+      <td>2008-08-29</td>
+      <td>['Action', 'Comedy']</td>
+      <td>87</td>
+      <td>PG-13</td>
+      <td>31.0</td>
+      <td>English</td>
+      <td>25000000.0</td>
+      <td>14109284.0</td>
+      <td>['natural disaster', 'violence', 'mortal dange...</td>
+      <td>['Matt Lanter', 'Vanessa Lachey', 'Crista Flan...</td>
+      <td>['Jason Friedberg', 'Aaron Seltzer']</td>
+    </tr>
+    <tr>
+      <td>5815</td>
+      <td>Battlefield Earth</td>
+      <td>2000-05-10</td>
+      <td>['Action', 'Science Fiction', 'War']</td>
+      <td>118</td>
+      <td>PG-13</td>
+      <td>29.0</td>
+      <td>English</td>
+      <td>44000000.0</td>
+      <td>21400000.0</td>
+      <td>['based on novel or book', 'post-apocalyptic f...</td>
+      <td>['John Travolta', 'Barry Pepper', 'Forest Whit...</td>
+      <td>['Roger Christian']</td>
+    </tr>
+    <tr>
+      <td>5816</td>
+      <td>Dragonball Evolution</td>
+      <td>2009-04-08</td>
+      <td>['Action', 'Adventure', 'Fantasy', 'Science Fi...</td>
+      <td>85</td>
+      <td>PG</td>
+      <td>26.0</td>
+      <td>English</td>
+      <td>100000000.0</td>
+      <td>57497699.0</td>
+      <td>['karate', 'superhero', 'revenge', 'dragon', '...</td>
+      <td>['Justin Chatwin', 'Chow Yun-Fat', 'Joon Park'...</td>
+      <td>['James Wong']</td>
+    </tr>
+  </tbody>
+</table>
+<p>5796 rows × 12 columns</p>
+</div>
+
+
 
 
 ```python
@@ -1613,17 +1907,17 @@ director_last_20yr_df = director_df[director_df['decade'] > 2000]
 actors_list_3 = list(set(','.join(last_20yr_df['actors']).replace('[','').replace(']','').replace("'",'').replace('"','').split(',')))
 
 #CHECKING LEN OF ACTORS LIST
-print(len(actors_list_3))
+print(f'There are {len(actors_list_3)} actors in the actors list' )
 
 #CREATING A LIST WITH ALL DIRECTOR NAMES FROM LAST 20 YEARS
 directors_list_3 = list(set(','.join(director_last_20yr_df['director_list']).replace('[','').replace(']','').replace("'",'').replace('"','').split(',')))
 
 #CHECKING LEN OF ACTORS LIST
-print(len(directors_list_3))
+print(f'There are {len(directors_list_3)} directors in the directors list')
 ```
 
-    10623
-    1750
+    There are 10623 actors in the actors list
+    There are 1750 directors in the directors list
     
 
 
@@ -1638,15 +1932,11 @@ for name in actors_list_3:
         actors_list_4.append(name)
 
 #CHECKING LEN OF LIST TO SEE IF IT MATCHES THE FIRST ONE
-len(actors_list_4)
+print(f'There are {len(actors_list_4)} actors in the revised actors list')
 ```
 
-
-
-
-    10623
-
-
+    There are 10623 actors in the revised actors list
+    
 
 
 ```python
@@ -1664,7 +1954,7 @@ for actor in actors_list_4:
 
 
 ```python
-#GETTING ACTOR AVERAGE REVENUE
+#GETTING ACTOR REVENUE SUM
 actors_dict_sum = {}
 for actor in actors_list_4:
     
@@ -1673,7 +1963,7 @@ for actor in actors_list_4:
         sum_ = (sum(actors_dict_2[actor]))
         actors_dict_sum[actor].append(sum_)
         
-#CREATING AN ACTOR AVG REVENUE DF 
+#CREATING AN ACTOR SUM REVENUE DF 
 sum_actor_df = pd.DataFrame(actors_dict_sum).transpose()
 sum_actor_df.reset_index(inplace=True)
 sum_actor_df.columns = (['Actor','Revenue_Sum'])
@@ -1692,15 +1982,11 @@ for name in directors_list_3:
         directors_list_4.append(name)
 
 #CHECKING LEN OF LIST TO SEE IF IT MATCHES THE FIRST ONE
-len(directors_list_4)
+print(f'There are {len(directors_list_4)} directors in the revised directors list')
 ```
 
-
-
-
-    1750
-
-
+    There are 1750 directors in the revised directors list
+    
 
 
 ```python
